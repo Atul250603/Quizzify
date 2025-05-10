@@ -10,7 +10,9 @@ export async function middleware(request: NextRequest) {
     });
 
     const isLoggedIn = !!session && session.accessToken;
-
+    console.log('path', path);
+    console.log('session', session);
+    console.log('isLoggedIn', isLoggedIn);
     // 🔹 If user is logged in and tries to access "/" or "/signin", redirect to "/quiz"
     if (isLoggedIn && (path === "/" || path.startsWith("/signin"))) {
         return NextResponse.redirect(new URL("/quiz", request.url));
