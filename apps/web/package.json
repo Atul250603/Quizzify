@@ -11,10 +11,19 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@repo/types": "*",
     "@repo/ui": "*",
-    "next": "^15.2.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "axios": "^1.8.4",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.483.0",
+    "next": "^15.2.4",
+    "next-auth": "^4.24.11",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.5.2"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.2.2",
@@ -22,12 +31,14 @@
     "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
     "@types/node": "^22.13.9",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.22.0",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "5.8.2"
-  }
+  },
+  "overrides": {
+  "react-is": "^19.0.0-rc-69d4b800-20241021"
+}
+
 }

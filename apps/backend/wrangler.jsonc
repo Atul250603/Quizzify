@@ -1,0 +1,57 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "quizzify",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-03-26",
+  // "compatibility_flags": [
+  //   "nodejs_compat"
+  // ],
+  "vars": {
+    "DATABASE_URL": "postgresql://quizzify_owner:npg_Xzpj7nx8eilg@ep-old-bush-a5q69see-pooler.us-east-2.aws.neon.tech/quizzify?sslmode=require",
+    "JWT_SECRET": "your_random_secret",
+    "OPENAI_API_KEY": "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",
+    "GEMINI_API_KEY": "AIzaSyDIfpgX_CIK4_io8-pZZ8o5FU4dapUfv6w",
+    "LEMON_SQUEEZY_API_KEY": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NGQ1OWNlZi1kYmI4LTRlYTUtYjE3OC1kMjU0MGZjZDY5MTkiLCJqdGkiOiI2Zjg2NjI1OGFiMzIzYTc3YjYzYWQxYTE0Y2VjMjI3Mjg1YTUyOWJhZWQyYTYxYTAzMGUzNzRkYzc1YzUxNjY2ZDJmNzk2ZDM1OTczMWQ0YiIsImlhdCI6MTc0Njg5OTMyNS4xNTYzMDUsIm5iZiI6MTc0Njg5OTMyNS4xNTYzMDgsImV4cCI6MjA2MjQzMjEyNS4xMTA5NjYsInN1YiI6IjQ2Nzk5MjciLCJzY29wZXMiOltdfQ.AP8wZ6Fy875tM247-4OQ7PCSh_Pzqey6oofWR4yYc8CzLIo9WYg8rqJjxGrswx8HBMko00LgyQvCFQSKikPIwN0V8YQ1DDPwvb-OmPbFJ3mDXU8EIh8pLHGYF81AQ3AIVqUBDObgpqcTWuPZFQsHWamXNYrJ63i3eLguXQ_5d8NB-IsMvenojkkY3X19_uYtywNAXE2O-22as-8JzYEEIRhWz2gukXwRvZuB75qifDxyPxPwZPtLtgvR0uPWzZW-umctOvI6mCNbJ3KlwYiCFll8EP0-XoWN425EBGauZQ9eI6fHUGofrUrEDHvir07yxkGmVKkDjuKMIkSPeb-II-h-cqNRMuqXlxMEfx4mqkUxWYXdmfMe5yqqsYkW5usdI2dhEfQWjt6NsCluE_UFYsmwE52cwJZ78ywebPFrlBWR0QHHg85eoIUTVUuEXhZrEPdmrHNSvqPcF46ZdtzQzJRPsVg8h-mLzotdIL84givBqDASUQtutaolpsENivQn",
+    "LEMON_SQUEEZY_API_URL": "https://api.lemonsqueezy.com/v1/",
+    "PRO_VARIANT_ID": "797096",
+    "STORE_ID": "168074",
+    "LEMON_SQUEEZY_WEBHOOK_SIGNATURE": "r3kTYdStuH2xDZxPrgZyGxHMmAnjDVX9",
+    "BASE_URL": "https://quizzify.atul250603.workers.dev/"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "quizzify_kv",
+      "id": "1b75a106fabd4030ace9c06a1a4bf31c",
+      "preview_id": "335aa588e8e4433692f3168e3d5c2530"
+    }
+  ],
+  // "trigger": {
+  //   "crons": [
+  //     {
+  //       "cron": "0 0 * * *",
+  //       "schedule": "every day at midnight",
+  //       "binding": "MY_CRON"
+  //     }
+  //   ]
+  // },
+  // "r2_buckets": [
+  //   {
+  //     "binding": "MY_BUCKET",
+  //     "bucket_name": "my-bucket"
+  //   }
+  // ],
+  // "d1_databases": [
+  //   {
+  //     "binding": "MY_DB",
+  //     "database_name": "my-database",
+  //     "database_id": ""
+  //   }
+  // ],
+  // "ai": {
+  //   "binding": "AI"
+  // },
+  // "observability": {
+  //   "enabled": true,
+  //   "head_sampling_rate": 1
+  // }
+}
