@@ -81,7 +81,7 @@ function PrivacyPolicy() {
                             8. Contact Us
                         </div>
                         <div>
-                            If you have any questions, contact us at support@quizzify.com.
+                            If you have any questions, contact us at hq.quizzify@gmail.com.
                         </div>
                     </div>
                     <div>
