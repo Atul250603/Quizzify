@@ -124,7 +124,7 @@ const generatePrompt = (topic: string, difficulty: string) => {
     - Extract the Core Topic: If the user provides an overly detailed topic, focus on the main subject. (e.g., "Computer Networks").
     - Question Structure: Generate exactly 10 MCQs.
     - Options: Each question must have four unique answer choices.
-    - Correct Answer: Clearly specify the correct answer.
+    - Correct Answer: Clearly specify the correct answer and it must be from the options.
     - Explanation: Provide a detailed explanation for why the correct answer is correct.
     - Sub-topic Field: Assign a sub-topic to each question for better categorization.
     - Questions : Per sub-topic, generate 2 questions. Ensure that the sub-topics are relevant to the main topic and difficulty level.

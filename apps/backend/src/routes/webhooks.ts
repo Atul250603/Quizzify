@@ -60,7 +60,6 @@ webhooks.post('/lemonsqueezy', async (c) => {
           const subscriptionId = parsedBody?.data?.attributes?.subscription_id;
           const customerId = parsedBody?.data?.attributes?.customer_id;
           const email = parsedBody?.data?.attributes?.user_email;
-          const userId = parsedBody?.meta?.custom_data?.userId;
 
           if (!email || !customerId || !subscriptionId || !userId) {
             const missingFields = [];
@@ -99,7 +98,6 @@ webhooks.post('/lemonsqueezy', async (c) => {
           const status = parsedBody?.data?.attributes.status;
           const customerId = parsedBody?.data?.attributes.customer_id;
           const email = parsedBody?.data?.attributes.user_email;
-          const userId = parsedBody?.meta?.custom_data?.userId;
           const subscriptionId = parsedBody?.data?.id;
 
           if (!email || !customerId || !subscriptionId || !userId) {
@@ -178,19 +176,17 @@ webhooks.post('/lemonsqueezy', async (c) => {
       }
     }
     if (userId) {
-  const profileCacheUrl = new URL(`/cache/profile:${userId}`, c.env.BASE_URL);
-  profileCacheUrl.search = '';
-  // For debugging
-  console.log("Attempting to delete cache for URL:", profileCacheUrl.toString());
-  
-  c.executionCtx.waitUntil(
-    caches.default.delete(profileCacheUrl).then(success => {
-      console.log(`Cache deletion for ${profileCacheUrl} ${success ? 'successful' : 'failed'}`);
-    }).catch(error => {
-      console.error(`Error deleting cache for ${profileCacheUrl}:`, error);
-    })
-  );
-}
+      const profileCacheUrl = new URL(`/cache/profile:${userId}`, c.env.BASE_URL);
+      profileCacheUrl.search = '';
+      // For debugging
+      console.log("Attempting to delete cache for URL:", profileCacheUrl.toString());
+
+      c.executionCtx.waitUntil(
+        Promise.all([
+          caches.default.delete(profileCacheUrl)
+        ])
+      );
+    }
     return c.json({
       status: "success"
     }, 200);
