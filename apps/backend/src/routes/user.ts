@@ -53,6 +53,7 @@ user.get("/profile", async (c) => {
     
     const cachedResponse = await caches.default.match(cacheUrl);
     if (cachedResponse) {
+      console.log("Cache hit for profile data");
       return new Response(cachedResponse.body, {
         headers: { 'Content-Type': 'application/json' }
       });
@@ -249,6 +250,7 @@ user.get('/quizzes', async (c) => {
     if (shouldGetFromCache) {
       const cachedResponse = await caches.default.match(cacheUrl);
       if (cachedResponse) {
+        console.log("Cache hit for quizzes data");
         return new Response(cachedResponse.body, {
           headers: { 'Content-Type': 'application/json' }
         });
@@ -322,6 +324,7 @@ user.get('/quizzes/:id', async (c) => {
 
     const cachedResponse = await caches.default.match(cacheUrl);
     if (cachedResponse) {
+      console.log("Cache hit for quiz data");
       return new Response(cachedResponse.body, {
         headers: { 'Content-Type': 'application/json' }
       });
