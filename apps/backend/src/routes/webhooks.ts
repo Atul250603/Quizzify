@@ -178,13 +178,19 @@ webhooks.post('/lemonsqueezy', async (c) => {
       }
     }
     if (userId) {
-      const profileCacheUrl = new URL(`/cache/profile:${userId}`, c.env.BASE_URL);
-      c.executionCtx.waitUntil(Promise.all([
-        caches.default.delete(profileCacheUrl),
-      ]));
-
-      console.log("Deleted cache for userId in webhooks handler:", userId);
-    }
+  const profileCacheUrl = new URL(`/cache/profile:${userId}`, c.env.BASE_URL);
+  profileCacheUrl.search = '';
+  // For debugging
+  console.log("Attempting to delete cache for URL:", profileCacheUrl.toString());
+  
+  c.executionCtx.waitUntil(
+    caches.default.delete(profileCacheUrl).then(success => {
+      console.log(`Cache deletion for ${profileCacheUrl} ${success ? 'successful' : 'failed'}`);
+    }).catch(error => {
+      console.error(`Error deleting cache for ${profileCacheUrl}:`, error);
+    })
+  );
+}
     return c.json({
       status: "success"
     }, 200);
