@@ -28,6 +28,8 @@ function Quiz({quizId} : {quizId: string}) {
     const fetchQuiz = async () => {
         try {
             const id = quizId
+            console.log("Fetching quiz with id: ", id)
+            console.log("Current quiz state: ", quiz)
             if (quiz?.id === id) return
             setLoading(true)
             const session = await getSession()
@@ -124,7 +126,7 @@ function Quiz({quizId} : {quizId: string}) {
 
     useEffect(() => {
         fetchQuiz()
-    }, [])
+    }, [quizId])
 
     const unansweredQuestions = useMemo(() => {
         return answers.filter((e) => e.answer === null).length
