@@ -182,6 +182,8 @@ webhooks.post('/lemonsqueezy', async (c) => {
       c.executionCtx.waitUntil(Promise.all([
         caches.default.delete(profileCacheUrl),
       ]));
+
+      console.log("Deleted cache for userId in webhooks handler:", userId);
     }
     return c.json({
       status: "success"
