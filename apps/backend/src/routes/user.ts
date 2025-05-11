@@ -7,7 +7,7 @@ import { validateUser } from "../middleware/validateUser";
 import { rateLimit } from "../middleware/rateLimit";
 import axios from "axios";
 import { headers } from "../utils/lemonSqueezy";
-import { env } from "cloudflare:workers";
+import { createCacheKey } from "../utils/cacheKey";
 
 const CACHE_EXPIRY = 60 * 5; // 5 minutes in seconds
 const user = new Hono<{ Bindings: Bindings, Variables: Variables }>();
@@ -28,9 +28,7 @@ const selectModel = () => {
 user.use('*', validateUser)
 
 // Helper function to create cache keys
-const createCacheKey = (prefix: string, userId: string, extraParams: string = '') => {
-  return `${prefix}:${userId}${extraParams ? `:${extraParams}` : ''}`;
-};
+
 
 user.get("/profile", async (c) => {
   try {
@@ -50,7 +48,6 @@ user.get("/profile", async (c) => {
     // Try to get data from cache first using Cloudflare's cache
     const cacheUrl = new URL(`/cache/${cacheKey}`, c.env.BASE_URL);
     cacheUrl.search = '';
-    
     const cachedResponse = await caches.default.match(cacheUrl);
     if (cachedResponse) {
       console.log("Cache hit for profile data");
@@ -198,9 +195,12 @@ user.post('/createQuiz', rateLimit(5), async (c) => {
     }
 
     // Invalidate relevant caches after creating a new quiz
-    const profileCacheUrl = new URL(`/cache/profile:${user.id}`, c.env.BASE_URL);
-    
-    const quizzesCacheUrl = new URL(`/cache/quizzes:${user.id}`, c.env.BASE_URL);
+    const profileCacheKey = createCacheKey('profile', user.id);
+    const profileCacheUrl = new URL(`/cache/${profileCacheKey}`, c.env.BASE_URL);
+    profileCacheUrl.search = '';
+    const quizzesCacheKey = createCacheKey('quizzes', user.id);
+    const quizzesCacheUrl = new URL(`/cache/${quizzesCacheKey}`, c.env.BASE_URL);
+    quizzesCacheUrl.search = '';
     
     c.executionCtx.waitUntil(Promise.all([
       caches.default.delete(profileCacheUrl),
@@ -527,8 +527,9 @@ user.put('/quizzes/:id', rateLimit(), async (c) => {
     }
 
     // Invalidate caches related to this quiz using Cloudflare's cache API
-    const quizCacheUrl = new URL(`/cache/quiz:${user.id}:${id}`, c.env.BASE_URL);
-    
+    const quizCacheKey = createCacheKey('quiz', user.id, id);
+    const quizCacheUrl = new URL(`/cache/${quizCacheKey}`, c.env.BASE_URL);
+    quizCacheUrl.search = '';
     // const quizzesCacheUrl = new URL(c.env.BASE_URL);
     // quizzesCacheUrl.pathname = `/cache/quizzes:${user.id}`;
     

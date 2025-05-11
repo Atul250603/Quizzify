@@ -5,6 +5,7 @@ import axios from "axios";
 import { headers } from "../utils/lemonSqueezy";
 import { users } from "@repo/db/index";
 import { and, eq } from "drizzle-orm";
+import { createCacheKey } from "../utils/cacheKey";
 const webhooks = new Hono<{ Bindings: Bindings, Variables: Variables }>()
 
 webhooks.post('/lemonsqueezy', async (c) => {
@@ -176,7 +177,8 @@ webhooks.post('/lemonsqueezy', async (c) => {
       }
     }
     if (userId) {
-      const profileCacheUrl = new URL(`/cache/profile:${userId}`, c.env.BASE_URL);
+      const profileCacheKey = createCacheKey('profile', userId);
+      const profileCacheUrl = new URL(`/cache/${profileCacheKey}`, c.env.BASE_URL);
       profileCacheUrl.search = '';
       // For debugging
       console.log("Attempting to delete cache for URL:", profileCacheUrl.toString());
