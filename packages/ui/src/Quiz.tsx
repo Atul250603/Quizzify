@@ -30,7 +30,6 @@ function Quiz({quizId} : {quizId: string}) {
             const id = quizId
             console.log("Fetching quiz with id: ", id)
             console.log("Current quiz state: ", quiz)
-            if (quiz?.id === id) return
             setLoading(true)
             const session = await getSession()
             if (!session) {
@@ -125,6 +124,7 @@ function Quiz({quizId} : {quizId: string}) {
     }
 
     useEffect(() => {
+        setQuiz(null);
         fetchQuiz()
     }, [quizId])
 
