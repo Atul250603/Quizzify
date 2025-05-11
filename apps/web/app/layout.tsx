@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Quizzify",
     siteName: "Quizzify",
-    url: "https://quizzify-green.vercel.app/",
+    url: "https://quizzify.site/",
     description:
       "Enter any topic and get instant, personalized quizzes to enhance your learning. Receive detailed analytics and curated resources to fill knowledge gaps.",
     type: "website",
     images: [
       {
-        url: "https://quizzify-green.vercel.app/Quizzify.png",
+        url: "https://quizzify.site/Quizzify.png",
         width: 1200,
         height: 630,
         alt: "Quizzify Cover Image",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: "Quizzify",
     description:
       "Enter any topic and get instant, personalized quizzes to enhance your learning. Receive detailed analytics and curated resources to fill knowledge gaps.",
-    images: ["https://quizzify-green.vercel.app/Quizzify.png"],
+    images: ["https://quizzify.site/Quizzify.png"],
     creator: "@AtulGoyal383989"
   },
 };
