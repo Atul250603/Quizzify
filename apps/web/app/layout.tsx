@@ -2,7 +2,7 @@ import "./globals.css";
 import "@repo/ui/styles.css";
 import Wrapper from "@repo/ui/Wrapper";
 import type { Metadata } from "next";
-
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Create Turborepo",
@@ -44,6 +44,7 @@ export default function RootLayout({
         <Wrapper>
           {children}
         </Wrapper>
+        <Analytics />
       </body>
     </html>
   );

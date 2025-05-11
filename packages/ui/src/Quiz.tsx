@@ -28,8 +28,6 @@ function Quiz({quizId} : {quizId: string}) {
     const fetchQuiz = async () => {
         try {
             const id = quizId
-            console.log("Fetching quiz with id: ", id)
-            console.log("Current quiz state: ", quiz)
             setLoading(true)
             const session = await getSession()
             if (!session) {
