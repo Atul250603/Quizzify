@@ -1,6 +1,7 @@
+'use client';
 import Quiz from "@repo/ui/Quiz";
 
-async function QuizPage({params}: {params: {id: string}}) {
+function QuizPage({params}: {params: {id: string}}) {
   return <div>
     <div>
         <Quiz
