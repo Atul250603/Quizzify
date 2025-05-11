@@ -7,14 +7,14 @@ import axios from "axios"
 import { getSession } from "next-auth/react"
 import { useAtom } from "jotai";
 import { quizState } from "./store/atom";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { QuizSkeleton } from "./Skeleton";
 import { analysis, answerRequest } from "@repo/types/index";
 import Loading from "./Loading";
 import DrawTimeChart from "./DrawTimeChart";
 import { formatTime } from "./utils/formatTime";
 
-function Quiz() {
+function Quiz({quizId} : {quizId: string}) {
     const [quiz, setQuiz] = useAtom(quizState)
     const [expand, setExpand] = useState<boolean[]>([])
     const [loading, setLoading] = useState(true)
@@ -24,11 +24,10 @@ function Quiz() {
     const [questionStartTimes, setQuestionStartTimes] = useState<number[]>([])
     const [submitLoading, setSubmitLoading] = useState<boolean>(false)
     const router = useRouter()
-    const params = useParams()
 
     const fetchQuiz = async () => {
         try {
-            const id = params.id
+            const id = quizId
             if (quiz?.id === id) return
             setLoading(true)
             const session = await getSession()
@@ -145,7 +144,7 @@ function Quiz() {
                 return
             }
 
-            const id = params.id
+            const id = quizId
             const resp = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/quizzes/${id}`, {
                 answer: answers
             }, {
@@ -187,7 +186,7 @@ function Quiz() {
             {loading ? <QuizSkeleton/> :
             quiz && quiz.quiz && quiz.quiz?.questions?.length > 0  && quiz.quiz.questions[quizIndex] ?
 
-              <div className="w-full h-full p-2 flex flex-col justify-center items-center sm:w-3/4 sm:p-0 relative" key={`quiz-${params.id || ''}-question-` + quizIndex}>
+              <div className="w-full h-full p-2 flex flex-col justify-center items-center sm:w-3/4 sm:p-0 relative" key={`quiz-${quizId || ''}-question-` + quizIndex}>
                 { (!quiz.submitted) ? <div className="w-full flex items-center gap-4">
                     <div className="flex justify-center">
                         <button className="bg-purple-600 rounded-full w-max p-1 text-white invisible">
@@ -222,7 +221,7 @@ function Quiz() {
                             {quiz.quiz.questions[quizIndex].question}
                         </div>
                         <div className="w-full mt-4 font-medium">
-                            { quiz.quiz.questions[quizIndex]?.options.map((o, index) => <button className={` p-2 text-left rounded-lg mt-3 w-full break-words shadow-sm hover:shadow-inner transition-all disabled:cursor-not-allowed ${answers[quizIndex]?.answer ? answers[quizIndex].answer === o && answers[quizIndex].isCorrect ? "bg-green-600 text-white" : answers[quizIndex].answer === o && !answers[quizIndex].isCorrect ? "bg-red-600 text-white" : o === quiz?.quiz?.questions[quizIndex]?.correct_answer ? "bg-green-600 text-white" : "bg-purple-200 hover:bg-purple-300" : "bg-purple-200 hover:bg-purple-300"}`} key={`quiz-${params.id || ''}-question-${quizIndex}-option-` + index} onClick={() => handleAnswer(o)} disabled={(answers[quizIndex]?.answer !== null)}>
+                            { quiz.quiz.questions[quizIndex]?.options.map((o, index) => <button className={` p-2 text-left rounded-lg mt-3 w-full break-words shadow-sm hover:shadow-inner transition-all disabled:cursor-not-allowed ${answers[quizIndex]?.answer ? answers[quizIndex].answer === o && answers[quizIndex].isCorrect ? "bg-green-600 text-white" : answers[quizIndex].answer === o && !answers[quizIndex].isCorrect ? "bg-red-600 text-white" : o === quiz?.quiz?.questions[quizIndex]?.correct_answer ? "bg-green-600 text-white" : "bg-purple-200 hover:bg-purple-300" : "bg-purple-200 hover:bg-purple-300"}`} key={`quiz-${quizId || ''}-question-${quizIndex}-option-` + index} onClick={() => handleAnswer(o)} disabled={(answers[quizIndex]?.answer !== null)}>
                                 {o}
                             </button> )}
                         </div>
