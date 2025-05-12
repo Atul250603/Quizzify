@@ -178,21 +178,10 @@ webhooks.post('/lemonsqueezy', async (c) => {
     }
     if (userId) {
       const profileCacheKey = createCacheKey('profile', userId);
-      const profileCacheUrl = new URL(`/cache/${profileCacheKey}`, c.env.BASE_URL);
-      profileCacheUrl.search = '';
-      const cachedResponse = await caches.default.match(profileCacheUrl);
-      console.log("Cached response:", cachedResponse);
       // For debugging
-      console.log("Attempting to delete cache for URL:", profileCacheUrl.toString());
+      console.log("Attempting to delete cache for URL:", profileCacheKey);
 
-      c.executionCtx.waitUntil(
-        Promise.all([
-          caches.default.delete(profileCacheUrl)
-        ])
-      );
-
-      const cachedResponseAfterDelete = await caches.default.match(profileCacheUrl);
-      console.log("Cached response after delete:", cachedResponseAfterDelete);
+      await c.env.quizzify_kv.delete(profileCacheKey);
 
     }
     return c.json({

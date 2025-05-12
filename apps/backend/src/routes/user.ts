@@ -27,9 +27,6 @@ const selectModel = () => {
 
 user.use('*', validateUser)
 
-// Helper function to create cache keys
-
-
 user.get("/profile", async (c) => {
   try {
     const db = c.get('db')
@@ -45,15 +42,10 @@ user.get("/profile", async (c) => {
     // Create cache key for user profile
     const cacheKey = createCacheKey('profile', user.id);
     
-    // Try to get data from cache first using Cloudflare's cache
-    const cacheUrl = new URL(`/cache/${cacheKey}`, c.env.BASE_URL);
-    cacheUrl.search = '';
-    const cachedResponse = await caches.default.match(cacheUrl);
-    if (cachedResponse) {
+    const cacheKV = await c.env.quizzify_kv.get(cacheKey)
+    if (cacheKV) {
       console.log("Cache hit for profile data");
-      return new Response(cachedResponse.body, {
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return c.json(JSON.parse(cacheKV), 200);
     }
 
     const userData = await db.select().from(users).where(
@@ -83,16 +75,11 @@ user.get("/profile", async (c) => {
       message: "Profile fetched successfully", 
       user: responseBody 
     };
+  
     
-    // Store in Cloudflare cache
-    const responseToCache = new Response(JSON.stringify(response), {
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': `max-age=${CACHE_EXPIRY}`
-      }
+    await c.env.quizzify_kv.put(cacheKey, JSON.stringify(response), {
+      expirationTtl: CACHE_EXPIRY
     });
-    
-    c.executionCtx.waitUntil(caches.default.put(cacheUrl, responseToCache));
 
     return c.json(response, 200);
   } catch (error: any) {
@@ -196,14 +183,11 @@ user.post('/createQuiz', rateLimit(5), async (c) => {
 
     // Invalidate relevant caches after creating a new quiz
     const profileCacheKey = createCacheKey('profile', user.id);
-    const profileCacheUrl = new URL(`/cache/${profileCacheKey}`, c.env.BASE_URL);
-    profileCacheUrl.search = '';
     const quizzesCacheKey = createCacheKey('quizzes', user.id);
-    const quizzesCacheUrl = new URL(`/cache/${quizzesCacheKey}`, c.env.BASE_URL);
-    quizzesCacheUrl.search = '';
+    const quizzesCacheUrl = new Request(`${c.env.BASE_URL}cache/${quizzesCacheKey}`);
+    await c.env.quizzify_kv.delete(profileCacheKey)
     
     c.executionCtx.waitUntil(Promise.all([
-      caches.default.delete(profileCacheUrl),
       caches.default.delete(quizzesCacheUrl)
     ]));
 
@@ -245,8 +229,7 @@ user.get('/quizzes', async (c) => {
     const cacheKey = createCacheKey('quizzes', user.id);
     
     // Try to get data from cache first using Cloudflare's cache
-    const cacheUrl = new URL(`/cache/${cacheKey}`, c.env.BASE_URL);
-    cacheUrl.search = '';
+    const cacheUrl = new Request(`${c.env.BASE_URL}cache/${cacheKey}`);
     if (shouldGetFromCache) {
       const cachedResponse = await caches.default.match(cacheUrl);
       if (cachedResponse) {
@@ -319,8 +302,7 @@ user.get('/quizzes/:id', async (c) => {
     const cacheKey = createCacheKey('quiz', user.id, id);
     
     // Try to get data from cache first using Cloudflare's cache
-    const cacheUrl = new URL(`/cache/${cacheKey}`, c.env.BASE_URL);
-    cacheUrl.search = '';
+    const cacheUrl = new Request(`${c.env.BASE_URL}cache/${cacheKey}`);
 
     const cachedResponse = await caches.default.match(cacheUrl);
     if (cachedResponse) {
@@ -528,18 +510,10 @@ user.put('/quizzes/:id', rateLimit(), async (c) => {
 
     // Invalidate caches related to this quiz using Cloudflare's cache API
     const quizCacheKey = createCacheKey('quiz', user.id, id);
-    const quizCacheUrl = new URL(`/cache/${quizCacheKey}`, c.env.BASE_URL);
-    quizCacheUrl.search = '';
-    // const quizzesCacheUrl = new URL(c.env.BASE_URL);
-    // quizzesCacheUrl.pathname = `/cache/quizzes:${user.id}`;
-    
-    // const profileCacheUrl = new URL(c.env.BASE_URL);
-    // profileCacheUrl.pathname = `/cache/profile:${user.id}`;
+    const quizCacheUrl = new Request(`${c.env.BASE_URL}cache/${quizCacheKey}`);
     
     c.executionCtx.waitUntil(Promise.all([
       caches.default.delete(quizCacheUrl),
-      // caches.default.delete(quizzesCacheUrl),
-      // caches.default.delete(profileCacheUrl)
     ]));
 
     return c.json({
