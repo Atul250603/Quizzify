@@ -97,7 +97,7 @@ function Chat() {
             })
 
             if (resp?.data?.success && resp.data?.checkoutLink) {
-                window.open(resp.data.checkoutLink, "_blank")
+                window.open(resp.data.checkoutLink, "_self")
             } else if (resp?.data && !resp.data.success) {
                 throw new Error(resp.data.message)
             } else {

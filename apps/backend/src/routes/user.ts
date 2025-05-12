@@ -251,9 +251,10 @@ user.get('/quizzes', async (c) => {
 
     if (!quizzesData || !quizzesData.length) {
       return c.json({
-        success: false, 
+        success: true,
+        quizzes: [],
         message: "No quizzes found."
-      }, 404);
+        }, 200);
     }
 
     const response = {

@@ -1,10 +1,20 @@
 'use client'
 import VerticalNav from "@repo/ui/VerticalNav"
 import TopNav from "@repo/ui/TopNav"
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
+import toast from "react-hot-toast"
 
 function DashboardLayout({children} : {children : ReactNode}) {
   const [showSideBar, setShowSideBar] = useState<boolean>(true)
+  const searchParams = useSearchParams()
+  useEffect(() => {
+    const subParams = searchParams.get('sub')
+    if (subParams === 'success') {
+      toast.success("Subscription successful! Please wait a moment and refresh to see updates.");
+
+    }
+  }, [])
   return (
     <div className='flex w-screen relative overflow-hidden h-screen'>
         <div className={`transition-all duration-300 ease-in-out z-10 
