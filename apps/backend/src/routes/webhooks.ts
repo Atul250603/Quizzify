@@ -180,6 +180,8 @@ webhooks.post('/lemonsqueezy', async (c) => {
       const profileCacheKey = createCacheKey('profile', userId);
       const profileCacheUrl = new URL(`/cache/${profileCacheKey}`, c.env.BASE_URL);
       profileCacheUrl.search = '';
+      const cachedResponse = await caches.default.match(profileCacheUrl);
+      console.log("Cached response:", cachedResponse);
       // For debugging
       console.log("Attempting to delete cache for URL:", profileCacheUrl.toString());
 
@@ -188,6 +190,10 @@ webhooks.post('/lemonsqueezy', async (c) => {
           caches.default.delete(profileCacheUrl)
         ])
       );
+
+      const cachedResponseAfterDelete = await caches.default.match(profileCacheUrl);
+      console.log("Cached response after delete:", cachedResponseAfterDelete);
+
     }
     return c.json({
       status: "success"
