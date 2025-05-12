@@ -10,7 +10,7 @@ import { profileState, quizListState } from "./store/atom";
 import axios from "axios";
 import { toast } from 'react-hot-toast'
 import { signOut } from "next-auth/react";
-import { useParams, useRouter } from "next/navigation"
+import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { useAtom } from "jotai";
 import { ProfileSkeleton } from "./Skeleton";
 import Loading from "./Loading";
@@ -25,6 +25,7 @@ function VerticalNav({ setShowSideBar }: { setShowSideBar: Dispatch<SetStateActi
   const [hasMore, setHasMore] = useState(true)
   const scrollableRef = useRef<HTMLDivElement>(null)
   const params = useParams()
+  const searchParams = useSearchParams()
   const id = params.id || null
 
   const fetchUserData = async () => {
@@ -113,6 +114,10 @@ function VerticalNav({ setShowSideBar }: { setShowSideBar: Dispatch<SetStateActi
   }
 
   useEffect(() => {
+    const subParams = searchParams.get('sub')
+    if (subParams === 'success') {
+      toast.success('Subscription successful! Please wait a moment and refresh to see updates.')
+    }
     setQuizzes([])
     fetchUserData()
     fetchQuizzes(30, 0)
