@@ -1,6 +1,7 @@
 'use client'
 import VerticalNav from "@repo/ui/VerticalNav"
 import TopNav from "@repo/ui/TopNav"
+import SupportBtn from "@repo/ui/SupportBtn"
 import { ReactNode, useState } from "react"
 
 function DashboardLayout({children} : {children : ReactNode}) {
@@ -20,6 +21,7 @@ function DashboardLayout({children} : {children : ReactNode}) {
         <div className={`w-full ${!showSideBar ? 'block' : 'hidden'} absolute top-0`}>
           {!showSideBar && <TopNav setShowSideBar={setShowSideBar}/>}
         </div>
+        <SupportBtn />
     </div>
   )
 }

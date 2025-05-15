@@ -1,6 +1,6 @@
 import Quiz from "@repo/ui/Quiz";
 
-function QuizPage({params}: {params: {id: string}}) {
+async function QuizPage({params}: {params: {id: string}}) {
   return <div>
     <div>
         <Quiz
