@@ -6,7 +6,7 @@ function Pricing() {
         <div className="mt-[50px] pt-[10px]" id="pricing">
             <div className="flex flex-col items-center gap-4">
                 <div className="text-3xl sm:text-4xl text-center font-bold text-purple-600">Pricing</div>
-                <div className="w-[90%] sm:w-[70%] text-center sm:text-lg">
+                <div className="w-[90%] sm:w-[70%] text-center text-balance sm:text-lg">
                     Simple, transparent pricing. Choose the plan that works for your learning needs
                 </div>
             </div>

@@ -105,8 +105,8 @@ function HowItWork(): JSX.Element {
         <div className="mt-20 pt-3" id="howitworks" ref={componentRef}>
             <div className="flex flex-col items-center gap-4">
                 <div className="text-3xl sm:text-4xl text-center font-bold text-purple-600">How It Works</div>
-                <div className="w-full sm:w-3/4 md:w-2/3 text-center sm:text-lg">
-                    Get from topic to personalized learning in three simple steps
+                <div className="w-full sm:w-3/4 md:w-2/3 text-center text-balance sm:text-lg">
+                    Go from topic to personalized learning in three simple steps
                 </div>
                 <div className="w-full flex flex-col items-center">
                     <div className="w-full sm:w-3/4 md:w-2/3 rounded-lg border-4 border-purple-300 overflow-hidden">

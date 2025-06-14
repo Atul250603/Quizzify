@@ -47,7 +47,7 @@ function Faq() {
         <div className="mt-[50px] mb-[10px] pt-[10px]">
             <div className="flex flex-col items-center gap-4">
                 <div className="text-3xl sm:text-4xl text-center font-bold text-purple-600">Frequently Asked Questions</div>
-                <div className="w-[90%] sm:w-[70%] text-center sm:text-lg">
+                <div className="w-[90%] sm:w-[70%] text-center text-balance sm:text-lg">
                     Find answers to common questions about Quizzify
                 </div>
                 <div className="w-[80%] sm:w-[70%]">

@@ -24,8 +24,8 @@ function Landing() {
                     <div className="text-4xl sm:text-5xl font-bold text-purple-600 text-center">
                         Quizzify Your Learning
                     </div>
-                    <div className="w-[90%] sm:w-[70%] text-center sm:text-lg">
-                        Enter any topic and get instant, personalized quizzes to enhance your learning. Receive detailed analytics and curated resources to fill knowledge gaps.
+                    <div className="w-[90%] sm:w-[70%] text-center sm:text-lg text-balance">
+                        Enter any topic and get instant, personalized quizzes and receive detailed analytics to enhance your learning.
                     </div>
                     <div>
                        <GetStartedBtn/>

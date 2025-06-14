@@ -5,8 +5,8 @@ function Features() {
         <div className="mt-[50px] pt-[10px]" id="features">
                 <div className="flex flex-col items-center gap-4">
                     <div className="text-3xl sm:text-4xl text-center font-bold text-purple-600">Features</div>
-                    <div className="w-[90%] sm:w-[70%] text-center sm:text-lg">
-                        Our AI-powered quiz platform enhances your learning experience with personalized assessments and targeted recommendations.
+                    <div className="w-[90%] sm:w-[70%] text-center sm:text-lg text-balance">
+                        Our AI-powered quiz platform enhances your learning experience with personalized assessments and insightful analytics.
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div className="w-full bg-purple-300 rounded-lg p-4">
@@ -50,7 +50,7 @@ function Features() {
                                     Customizable Difficulty
                                 </div>
                                 <div>
-                                    Set your preferred difficulty level from beginner to expert. Gradually increase challenge as your knowledge improves.
+                                    Set your preferred difficulty level from easy to hard or mix of all. Gradually increase challenge as your knowledge improves.
                                 </div>
                             </div>
                     </div>
