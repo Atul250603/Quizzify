@@ -1,6 +1,7 @@
 # prod
 dist/
 wrangler.toml
+wrangler.jsonc
 # dev
 .yarn/
 !.yarn/releases
