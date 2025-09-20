@@ -21,7 +21,7 @@ node_modules/
 .env.production
 .dev.vars
 .prod.vars
-wrangler.jsonrc
+wrangler.jsonc
 
 # logs
 logs/
